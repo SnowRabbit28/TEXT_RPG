@@ -15,7 +15,7 @@ namespace TxtRPG
     /* 캐릭터 생성 클래스*/
     public class PlayerInfo
     {
-       
+        // get, set 사용
         public int level { get; set; }
         public string job { get; set; }
         public int ad { get; set; }
@@ -38,13 +38,14 @@ namespace TxtRPG
             Initem = new List<Item>();
         }
         /* 상태정보에 들어갈 정보 */
-        public void PlayerIn() // [E]가 
+        public void PlayerIn() // 나의정보 출력 + [E]가 될때 값 받아와서 여기 출력
         {
             // 아이템 능력에 따라 값이 바뀌어야해서 따로 설정
-            string ad_text = $"{ad}"; //10
-            string dep_text = $"{dep}";//5
+            string ad_text = ad.ToString(); //10
+            string dep_text = dep.ToString(); //5
 
-            if (ad != 10) ad_text = $"{ad} (+{ad - 10})"; // 17 (+7)
+            if (ad != 10) ad_text = $"{ad} (+{ad - 10})"; // 17(+7)
+            // 여기서 10을 하드코딩해주었지만.. 나중에 레벨업 하게되면 초기값이 바뀌게 될것이고..그럼 새로운 변수가 필요한가?
             if (dep != 5) dep_text = $"{dep} (+{dep - 5})";
             Console.WriteLine($" 레벨은 {level}레벨 \n 직업은 {job} \n 공격력은 {ad_text} \n 방어력은 {dep_text}\n 체력은 {hp}\n 골드는 {gold}\n");
         }
@@ -85,6 +86,7 @@ namespace TxtRPG
     {
         
         static PlayerInfo charInfo;
+
         static string[] playitem = new string[6];
         static string[] itemName = new string[] { "수련자의 갑옷", "무쇠갑옷", "스파르타의 갑옷", "낡은 검", "청동 도끼", "스파르타의 창" };
         static string[] itemPower = new string[] { "방어력 + 5", "방어력 + 9", "방어력 + 15", "공격력 + 2", "공격력 + 5", "공격력 + 7" };
@@ -105,7 +107,6 @@ namespace TxtRPG
         /* 처음 시작시 뜨게 하는것! */
         static public void getStart()
         {
-            // 이 코드도 지워줘? .응 z 키 누르면 그만이야
             while (true)
             {   //시작글
                 Console.WriteLine("1. 내 상태 확인");
