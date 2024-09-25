@@ -23,11 +23,11 @@ namespace TxtRPG
         public int hp { get; set; }
         public int gold { get; set; }
 
-        //인벤토리 아이템을 리스트로 선언
+        //가방에 있는 아이템을 리스트로 선언
         public List<Item> Initem { get; set; }
 
         //이것은 생성자 인가?
-        public PlayerInfo( int _level, string _job, int _ad, int _dep, int _hp, int _gold)
+        public PlayerInfo(int _level, string _job, int _ad, int _dep, int _hp, int _gold)
         {
             level = _level;
             job = _job;
@@ -50,7 +50,7 @@ namespace TxtRPG
             Console.WriteLine($" 레벨은 {level}레벨 \n 직업은 {job} \n 공격력은 {ad_text} \n 방어력은 {dep_text}\n 체력은 {hp}\n 골드는 {gold}\n");
         }
         //
-        public void BuyItem(Item buyItem)
+        public void BuyItem(Item buyItem)//
         {
             Initem.Add(buyItem);
         }
@@ -76,23 +76,20 @@ namespace TxtRPG
             ItemPri = itemPri;
             ItemPurchase = itemPurachae;
             ItemEquip = itemEquip;
-
-            if (itemPurachae != 0) Console.WriteLine(itemName + " | " + itemDes + " | " + itemType + " +" + itemPower + " | " + "구매함");
-            else Console.WriteLine(itemName + " | " + itemDes + " | " + itemType + " +" + itemPower + " | " + itemPri + "G");
         }
     }
 
     internal class Program
     {
-        
-        static PlayerInfo charInfo;
+        // int i;
+        static PlayerInfo charInfo; // 초본 1쇄
 
         static string[] playitem = new string[6];
         static string[] itemName = new string[] { "수련자의 갑옷", "무쇠갑옷", "스파르타의 갑옷", "낡은 검", "청동 도끼", "스파르타의 창" };
         static string[] itemPower = new string[] { "방어력 + 5", "방어력 + 9", "방어력 + 15", "공격력 + 2", "공격력 + 5", "공격력 + 7" };
         static string[] itemDes = new string[] { "수련에 도움을 주는 갑옷입니다.", "무쇠로 만들어져 튼튼한 갑옷입니다.", "스파르타의 전사들이 사용했다는 전설의 갑옷입니다.", "쉽게 볼 수 있는 낡은 검 입니다.", "어디선가 사용됐던거 같은 도끼입니다.", "스파르타의 전사들이 사용했다는 전설의 창입니다." };
         static int[] itemPay = new int[] { 1000, 1500, 3500, 600, 1500, 6000 };
-        static bool[] buy = new bool[6] { false, false, false, false, false, false };
+        static bool[] buy = new bool[6] { false, false, false, false, false, false }; // 몇번째 아이템을 샀는가..
         static void Main(string[] args)
         {
             charInfo = new PlayerInfo(1, "전사", 10, 5, 100, 1500);
@@ -143,8 +140,6 @@ namespace TxtRPG
                     }
                 }
             }
-
-
         }
 
         /* 0. 나가기 만들기, 나간다는건 전으로 돌아가게끔 */
@@ -169,7 +164,7 @@ namespace TxtRPG
 
                 Console.WriteLine(" ☆상태 정보를 표현해줍니다.☆\n");
                 Console.WriteLine("=========================\n");
-                charInfo.PlayerIn(); // 정보를 담은 클래스 => 이부분을 좀더 간단하게 수정할 방법이 있을까..?
+                charInfo.PlayerIn(); // 정보를 담은 클래스 => 이 부분을 좀더 간단하게 수정할 방법이 있을까..?
                 Console.WriteLine("=========================\n");
                 Console.WriteLine("0. 뒤로 돌아가기\n\n");
 
@@ -203,19 +198,19 @@ namespace TxtRPG
         {
 
             Console.Clear(); // 위의 글 지우기
+
             while (true)
             {
-
                 Console.WriteLine("\t☆가방입니다.☆");
                 Console.WriteLine("보유 중인 아이템을 관리할 수 있습니다.\n\n");
 
                 Console.WriteLine("[ 아이템 목록 ]\n");
 
-                for (int i = 0; i < charInfo.Initem.Count; i++)
+                for (int i = 0; i < charInfo.Initem.Count; i++) // 리스트의 길이만큼 포문을 돌릴예정, 지금은 0
                 {
-                    string equipment = "";
-                    Item p_item = charInfo.Initem[i];
-                    if (p_item.ItemEquip) equipment = "[E]";
+                    string equipment = ""; // 비어있는 문자열 선언
+                    Item p_item = charInfo.Initem[i]; // 구매하고나서 템이 불러지는 곳,
+                    if (p_item.ItemEquip) equipment = "[E]"; //출력은 늘 보여줘야하기때문에 장착관리도 여기에 선언..
                     Console.WriteLine("- " + equipment + p_item.ItemName + " | " + p_item.ItemType + " + " + p_item.ItemPower + " | " + p_item.ItemDes);
                 }
 
@@ -250,6 +245,7 @@ namespace TxtRPG
 
         }
 
+
         static void equip_item()
         {
             Console.Clear(); // 위의 글 지우기
@@ -257,15 +253,15 @@ namespace TxtRPG
             {
 
                 Console.WriteLine("\t☆가방입니다.☆");
-                Console.WriteLine("보유 중인 아이템을 관리할 수 있습니다.\n\n");
+                Console.WriteLine("보유 중인 아이템을 장착할 수 있습니다.\n\n");
 
                 Console.WriteLine("[ 아이템 목록 ]\n");
 
-                for (int i = 0; i < charInfo.Initem.Count; i++)
+                for (int i = 0; i < charInfo.Initem.Count; i++) // 리스트의 길이만큼 포문을 돌릴예정, 지금은 0
                 {
-                    string equipment = "";
-                    Item p_item = charInfo.Initem[i];
-                    if (p_item.ItemEquip) equipment = "[E]";
+                    string equipment = ""; // 비어있는 문자열 선언
+                    Item p_item = charInfo.Initem[i]; // 구매하고나서 템이 불러지는 곳,
+                    if (p_item.ItemEquip) equipment = "[E]"; //출력은 늘 보여줘야하기때문에 장착관리도 여기에 선언..
                     Console.WriteLine("- " + (i + 1) + ". " + equipment + p_item.ItemName + " | " + p_item.ItemType + " + " + p_item.ItemPower + " | " + p_item.ItemDes);
                 }
 
@@ -273,12 +269,12 @@ namespace TxtRPG
                 Console.WriteLine("0. 나가기\n\n");
 
                 Console.Write(" 장착할 장비를 선택해주세요.  ");
-
+                
                 if (int.TryParse(Console.ReadLine(), out int infoNum))
                 {
                     if (infoNum > 0 && infoNum < 6)
-                    {
-                        if (!charInfo.Initem[infoNum - 1].ItemEquip)
+                    { //1이 들어갔다치자
+                        if (!charInfo.Initem[infoNum - 1].ItemEquip) //거짓이면, 장착한게 아니면
                         {
                             charInfo.Initem[infoNum - 1].ItemEquip = true;
                             Item p_item = charInfo.Initem[infoNum - 1]; //인덱스는 0번인데 나는 1번을 눌러주어야하니까 쟤를 호출하면 -1으로 첫번째가 나와야하네
@@ -313,32 +309,32 @@ namespace TxtRPG
         }
 
 
-        static void Print_ItemList(bool print_type, PlayerInfo player)
+        static void Store_ItemList(bool print_type) // bool : 
         {
 
             for (int i = 0; i < charInfo.Initem.Count; i++)
-            {
-                buy[player.Initem[i].ItemPurchase] = true;
+            {   //ItemPurchase 는 int
+                buy[charInfo.Initem[i].ItemPurchase] = true; // 
             }
             for (int i = 0; i < 6; i++)
             {
                 string[] power = itemPower[i].Split(" ");
-                int purchase = 0;
+                int purchase = 0; //
                 // 예) power = ["공격력", "+", "3"]
                 // 방어력이 있는 경우
-                if (print_type) Console.Write("- " + (i + 1) + ". ");
-                if (!print_type) Console.Write("- ");
-                if (buy[i]) purchase = i + 1;
+                if (print_type) Console.Write("- " + (i + 1) + ". "); // 구매가능상점
+                if (!print_type) Console.Write("- "); //아이쇼핑상점
+                if (buy[i]) purchase = i + 1; // 구매완료라는 표시를 띄우기 위해 쓴 번호 80Line
 
-                if (power[0] == "방어력")
-                {
-                    Item item = new Item(itemName[i], itemDes[i], itemPay[i], purchase, false, power[0], int.Parse(power[2]));
-                }
                 // 공격력이 있는 경우
-                if (power[0] == "공격력")
+                if (power[0] == "방어력" || power[0] == "공격력") 
                 {
-                    Item item = new Item(itemName[i], itemDes[i], itemPay[i], purchase, false, power[0], int.Parse(power[2]));
+                    //Item item = new Item(itemName[i], itemDes[i], itemPay[i], purchase, false, power[0], int.Parse(power[2]));
+
+                    if (purchase != 0) Console.WriteLine(itemName[i] + " | " + itemDes[i] + " | " + power[0] + " +" + int.Parse(power[2]) + " | " + "구매함");
+                    else Console.WriteLine(itemName[i] + " | " + itemDes[i] + " | " + power[0] + " +" + int.Parse(power[2]) + " | " + itemPay[i] + "G");
                 }
+               
             }
 
         }
@@ -347,25 +343,25 @@ namespace TxtRPG
         {
             Console.Clear(); // 위의 글 지우기
 
-
-            Console.WriteLine("\t상점에 들어옵니다.");
-            Console.WriteLine("던전에 필요한 물건을 구입하세요!\n");
-            Console.WriteLine($"[보유골드] \n {charInfo.gold}G \n\n");
-
-            Console.WriteLine("[아이템 목록]");
-            Print_ItemList(false, charInfo);
-
-            Console.WriteLine();
-
-            Console.WriteLine("1. 아이템 구매");
-            Console.WriteLine("0. 나가기\n\n");
-
-            Console.Write(" 원하시는 행동을 선택해주세요.  ");
-
-            if (int.TryParse(Console.ReadLine(), out int infoNum))
+            while (true)
             {
-                while (true)
+                Console.WriteLine("\t상점에 들어옵니다.");
+                Console.WriteLine("던전에 필요한 물건을 구입하세요!\n");
+                Console.WriteLine($"[보유골드] \n {charInfo.gold}G \n\n");
+
+                Console.WriteLine("[아이템 목록]");
+                Store_ItemList(false);
+
+                Console.WriteLine();
+
+                Console.WriteLine("1. 아이템 구매");
+                Console.WriteLine("0. 나가기\n\n");
+
+                Console.Write(" 원하시는 행동을 선택해주세요.  ");
+
+                if (int.TryParse(Console.ReadLine(), out int infoNum))
                 {
+
                     if (infoNum == 1)
                     {
                         BuyItem(false, false);
@@ -382,69 +378,74 @@ namespace TxtRPG
                     {
                         WrongNum();
                     }
+
+
                 }
 
             }
 
-
         }
 
         /* 3-1 상점안에 아이템 목록 */
-        static void BuyItem(bool noMoney, bool noBuy)
+        static void BuyItem(bool noMoney, bool noBuy) // 돈이 있고 없고, 물건을 샀냐 안샀냐 / false, false
         {
             Console.Clear(); // 위의 글 지우기
 
-
-            Console.WriteLine("\t상점에 들어옵니다.");
-            Console.WriteLine("던전에 필요한 물건을 구입하세요!\n");
-            Console.WriteLine($"[보유골드] \n {charInfo.gold}G \n\n");
-
-            Console.WriteLine("[아이템 목록]");
-
-            Print_ItemList(true, charInfo);
-
-            Console.WriteLine("\n0. 나가기\n\n");
-            if (noMoney) Console.WriteLine("==========돈이 부족합니다.========\n");
-            if (noBuy) Console.WriteLine("========이미 구매한 아이템입니다.=========\n");
-
-            Console.Write(" 구매하실 아이템 번호를 입력해주세요.  ");
-
-            if (int.TryParse(Console.ReadLine(), out int infoNum))
+            while (true)
             {
+                Console.WriteLine("\t상점에 들어옵니다.");
+                Console.WriteLine("던전에 필요한 물건을 구입하세요!\n");
+                Console.WriteLine($"[보유골드] \n {charInfo.gold}G \n\n");
 
-                if (infoNum < 7 && infoNum > 0)
+                Console.WriteLine("[아이템 목록]");
+
+                Store_ItemList(true);
+
+                Console.WriteLine("\n0. 나가기\n\n");
+                if (noMoney) Console.WriteLine("==========돈이 부족합니다.========\n");
+                if (noBuy) Console.WriteLine("========이미 구매한 아이템입니다.=========\n");
+
+                Console.Write(" 구매하실 아이템 번호를 입력해주세요.  ");
+
+
+                if (int.TryParse(Console.ReadLine(), out int infoNum))
                 {
-                    string name = itemName[infoNum - 1];
-                    if (charInfo.Initem.FindIndex(c => c.ItemName == name) != -1)
+
+                    if (infoNum < 7 && infoNum > 0)
                     {
-                        noBuy = true;
-                        noMoney = false;
+                        string name = itemName[infoNum - 1]; // 돈을 쓸이유가 없음
+                        if (charInfo.Initem.FindIndex(c => c.ItemName == name) != -1) 
+                        {   // 아이템리스트에서 하나 꺼낸게 c ( 아이템 ) 그 아이템의 이름이 name과 같으면 그 인덱스를 출력
+                            // -1이면 아무것도 못찾은것 0 이상이면 찾긴 한것
+                            noBuy = true; // 구매완료
+                            noMoney = false;
+                        }
+                        else if (charInfo.gold < itemPay[infoNum - 1]) //돈을 써야하는데 쓸 돈이없음
+                        {
+                            noMoney = true;
+                            noBuy = false;
+                        }
+                        else // 살 수 있어서 돈을 쓸 수 있을때!
+                        {
+                            string[] info = itemPower[infoNum - 1].Split(" "); // [ "공격력","+","7" ] 
+                            Item buyingItem = new Item(itemName[infoNum - 1], itemDes[infoNum - 1], itemPay[infoNum - 1], infoNum - 1, false, info[0], int.Parse(info[2]));
+                            charInfo.BuyItem(buyingItem);
+                            charInfo.gold -= itemPay[infoNum - 1];
+                            noMoney = false;
+                            noBuy = false;
+                        }
+                        BuyItem(noMoney, noBuy);
                     }
-                    else if (charInfo.gold < itemPay[infoNum - 1])
+                    else if (infoNum == 0) //0을 누르면 돌아간다.
                     {
-                        noMoney = true;
-                        noBuy = false;
+                        Console.Clear();
+                        Console.WriteLine("돌아갑니다.\n\n");
+                        getStart();
                     }
                     else
                     {
-                        string[] info = itemPower[infoNum - 1].Split(" ");
-                        Item buyingItem = new Item(itemName[infoNum - 1], itemDes[infoNum - 1], itemPay[infoNum - 1], infoNum - 1, false, info[0], int.Parse(info[2]));
-                        charInfo.BuyItem(buyingItem);
-                        charInfo.gold -= itemPay[infoNum - 1];
-                        noMoney = false;
-                        noBuy = false;
+                        WrongNum();
                     }
-                    BuyItem(noMoney, noBuy);
-                }
-                else if (infoNum == 0) //0을 누르면 돌아간다.
-                {
-                    Console.Clear();
-                    Console.WriteLine("돌아갑니다.\n\n");
-                    getStart();
-                }
-                else
-                {
-                    WrongNum();
                 }
 
             }
